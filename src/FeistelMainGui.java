@@ -2,7 +2,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.io.FileNotFoundException;
-
 import java.awt.Font;
 import java.awt.Color;
 import java.awt.Insets;
@@ -15,7 +14,6 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.ActionListener;
 import java.awt.ComponentOrientation;
 import java.awt.event.ComponentAdapter;
-
 import java.util.Base64;
 import java.util.Random;
 import java.util.LinkedList;
@@ -209,16 +207,16 @@ public class FeistelMainGui extends JFrame {
 			GuiUtils.PopUpMessages.errorMsg("can't display in Win7 style!");
 		}
 
-		// Setup screen location.
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setLocation((GuiUtils.getScreenWidth() - 450) / 2,
-				(GuiUtils.getsScreenHeight() - 200) / 2);
-
 		// Adding all buttons and fields.
 		setupViewA();
 		setupViewB();
 		setupViewSwitcher();
 		addButtonsToViews();
+
+		// Setup and center the window.
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setLocation((GuiUtils.getScreenWidth() - this.getWidth()) / 2,
+				(GuiUtils.getsScreenHeight() - this.getHeight()) / 2);
 
 		// Starting the window.
 		panel = new JPanel();
@@ -766,6 +764,7 @@ public class FeistelMainGui extends JFrame {
 			keyBytes = new byte[8];
 			System.arraycopy(key.getBytes(), 0, keyBytes, 0, key.getBytes().length);
 		}
+
 		// Convert the resulting byte to base64 text.
 		cipherTextBytes = Base64.getDecoder().decode(cipherTextBytes);
 

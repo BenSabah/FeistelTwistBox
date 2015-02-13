@@ -286,7 +286,7 @@ public class Feistel {
 		 */
 		for (int i = 0; i < 16; i++) {
 			byte[] tmpR = R;
-			R = (isDecrypt) ? f_Function(R, subkeys[15 - i]) : f_Function(R, subkeys[i]);
+			R = f_Function(R, (isDecrypt) ? subkeys[15 - i] : subkeys[i]);
 			R = CoreUtils.xor(L, R);
 			L = tmpR;
 		}
@@ -338,6 +338,7 @@ public class Feistel {
 				curBlock = blockEncryptDecrypt(curBlock, subKeys, false);
 				System.arraycopy(curBlock, 0, result, i - 8, curBlock.length);
 			}
+
 			// Construct the block bit at a time.
 			if (i < input.length) {
 				curBlock[i % 8] = input[i];
