@@ -43,7 +43,6 @@ import javax.swing.text.BadLocationException;
 public class FeistelMainGui extends JFrame {
 	private static final long serialVersionUID = -5259343195128817704L;
 	static Random rnd;
-	static FeistelMainGui gui;
 	static JPanel panel = new JPanel();
 	static GuiUtils.ClipboardHandler clipboard;
 
@@ -84,6 +83,7 @@ public class FeistelMainGui extends JFrame {
 	private static RandomAccessFile keyRFA;
 	private static RandomAccessFile configRFA;
 
+	@SuppressWarnings("unused")
 	public static void main(String[] args) {
 		Feistel.plainTextPath = "p.txt";
 		Feistel.cipherTextPath = "c.txt";
@@ -112,7 +112,7 @@ public class FeistelMainGui extends JFrame {
 		clipboard = new GuiUtils.ClipboardHandler();
 
 		// Start the GUI window.
-		gui = new FeistelMainGui();
+		FeistelMainGui gui = new FeistelMainGui();
 	}
 
 	private static void automaticRunner(String textPath, String cipherPath, String keyPath,
@@ -214,43 +214,43 @@ public class FeistelMainGui extends JFrame {
 		addButtonsToViews();
 
 		// Setup and center the window.
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setLocation((GuiUtils.getScreenWidth() - this.getWidth()) / 2,
-				(GuiUtils.getsScreenHeight() - this.getHeight()) / 2);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setLocation((GuiUtils.getScreenWidth() - getWidth()) / 2,
+				(GuiUtils.getsScreenHeight() - getHeight()) / 2);
 
 		// Starting the window.
 		panel = new JPanel();
-		this.add(panel);
-		this.setVisible(true);
+		add(panel);
+		setVisible(true);
 
-		this.addComponentListener(new ComponentAdapter() {
+		addComponentListener(new ComponentAdapter() {
 			int AddedWidth;
 			int AddedHeight;
 
 			public void componentResized(ComponentEvent evt) {
-				AddedWidth = gui.getWidth() - viewBSize.x;
-				AddedHeight = gui.getHeight() - viewBSize.y;
+				AddedWidth = getWidth() - viewBSize.x;
+				AddedHeight = getHeight() - viewBSize.y;
 				resizeViewBComponentsBy(AddedWidth, AddedHeight);
 			}
 		});
 	}
 
-	private static void viewSwitcher() {
+	private void viewSwitcher() {
 		// We changed view setting.
 		isViewA = !isViewA;
 
 		// Set resizing and sizes
-		gui.setResizable(!isViewA);
+		setResizable(!isViewA);
 		if (isViewA) {
-			gui.setMinimumSize(null);
-			gui.setSize(viewASize.x, viewASize.y);
+			setMinimumSize(null);
+			setSize(viewASize.x, viewASize.y);
 		} else {
-			gui.setMinimumSize(new Dimension(viewBSize.x, viewBSize.y));
-			gui.setSize(viewBSize.x, viewBSize.y);
+			setMinimumSize(new Dimension(viewBSize.x, viewBSize.y));
+			setSize(viewBSize.x, viewBSize.y);
 		}
 
 		// Set the window title.
-		gui.setTitle(getGuiTitle(isViewA));
+		setTitle(getGuiTitle(isViewA));
 
 		// Reversing the 2 different views.
 		for (JComponent curComponent : viewA) {
@@ -312,15 +312,15 @@ public class FeistelMainGui extends JFrame {
 				viewSwitcher();
 			}
 		});
-		this.add(viewSwitcherButton);
+		add(viewSwitcherButton);
 	}
 
 	private void setupViewA() {
-		this.setSize(viewASize.x, viewASize.y);
-		this.setResizable(false);
+		setSize(viewASize.x, viewASize.y);
+		setResizable(false);
 
 		// Setup original title.
-		this.setTitle(getGuiTitle(isViewA));
+		setTitle(getGuiTitle(isViewA));
 
 		// Setting the plain-text loading button.
 		plainTextButton = new JButton("Plain-Text file:");
@@ -435,24 +435,24 @@ public class FeistelMainGui extends JFrame {
 		});
 
 		// Adding all the buttons & fields.
-		this.add(plainTextButton);
-		this.add(cipherTextButton);
-		this.add(keyButton);
-		this.add(encryptButton);
-		this.add(decryptButton);
-		this.add(verifyButton);
-		this.add(plainTextField);
-		this.add(cipherTextField);
-		this.add(keyField);
+		add(plainTextButton);
+		add(cipherTextButton);
+		add(keyButton);
+		add(encryptButton);
+		add(decryptButton);
+		add(verifyButton);
+		add(plainTextField);
+		add(cipherTextField);
+		add(keyField);
 
 	}
 
 	private void setupViewB() {
-		this.setResizable(!isViewA);
-		this.setMinimumSize(new Dimension(viewBSize.x, viewBSize.y));
+		setResizable(!isViewA);
+		setMinimumSize(new Dimension(viewBSize.x, viewBSize.y));
 
 		// Setup original title.
-		this.setTitle(getGuiTitle(isViewA));
+		setTitle(getGuiTitle(isViewA));
 
 		String buttonName;
 
@@ -627,13 +627,12 @@ public class FeistelMainGui extends JFrame {
 		});
 
 		// Adding all the buttons & fields.
-		this.add(OTFPlainTextFrame);
-		this.add(OTFKeyText);
-		this.add(OTFCipherText);
-		this.add(OTFplainTextButton);
-		this.add(OTFkeyButton);
-		this.add(OTFcipherTextButton);
-
+		add(OTFPlainTextFrame);
+		add(OTFKeyText);
+		add(OTFCipherText);
+		add(OTFplainTextButton);
+		add(OTFkeyButton);
+		add(OTFcipherTextButton);
 	}
 
 	private void encrypt() {
