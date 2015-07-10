@@ -250,7 +250,7 @@ class CoreUtils {
 
 	/**
 	 * This method gets a byte and return its string representation, for example
-	 * the following <code>byteToString((byte) 4)</code> will return the string
+	 * the following <code>byteToString((byte) 5)</code> will return the string
 	 * <code>00000101</code> This method is completely for testing purposes.
 	 * 
 	 * @param a
