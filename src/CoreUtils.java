@@ -7,6 +7,7 @@
  * @author Ben Sabah.
  */
 class CoreUtils {
+
 	/**
 	 * This function applies a bitwise-XOR over two byte vectors.
 	 * 
@@ -16,7 +17,6 @@ class CoreUtils {
 	 *            The array of bytes to be xor'ed with <code>byteArrA</code>
 	 * @return The result Xor'ed byte array
 	 */
-
 	static byte[] xor(byte[] byteArrA, byte[] byteArrB) {
 		byte[] result = new byte[byteArrA.length];
 
@@ -270,7 +270,7 @@ class CoreUtils {
 	/**
 	 * This method gets an array of bytes and return their string
 	 * representation, for example the following
-	 * <code>byteToString(new byte[] {(byte) 4, (byte) 7})</code> will return
+	 * <code>byteToString(new byte[] {(byte) 5, (byte) 7})</code> will return
 	 * the string <code>0000010100000111</code> This method is completely for
 	 * testing purposes.
 	 * 

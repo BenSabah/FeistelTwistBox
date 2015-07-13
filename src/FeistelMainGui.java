@@ -1,3 +1,7 @@
+import java.util.Base64;
+import java.util.Random;
+import java.util.LinkedList;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
@@ -6,7 +10,6 @@ import java.io.FileNotFoundException;
 import java.awt.Font;
 import java.awt.Color;
 import java.awt.Insets;
-import java.awt.Point;
 import java.awt.Dimension;
 import java.awt.event.KeyEvent;
 import java.awt.event.ActionEvent;
@@ -15,9 +18,6 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.ActionListener;
 import java.awt.ComponentOrientation;
 import java.awt.event.ComponentAdapter;
-import java.util.Base64;
-import java.util.Random;
-import java.util.LinkedList;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -57,7 +57,7 @@ public class FeistelMainGui extends JFrame {
 	static JTextField plainTextField;
 	static JTextField cipherTextField;
 	static JTextField keyField;
-	static Point viewASize = new Point(435, 235);
+	static Dimension viewASize = new Dimension(435, 235);
 
 	// ViewB GUI components.
 	static JButton OTFplainTextButton;
@@ -67,7 +67,7 @@ public class FeistelMainGui extends JFrame {
 	static JTextField OTFCipherText;
 	static JTextField OTFKeyText;
 	static JScrollPane OTFPlainTextFrame;
-	static Point viewBSize = new Point(445, 245);
+	static Dimension viewBSize = new Dimension(445, 245);
 
 	// The fields for the view switching setting.
 	static boolean isViewA = false;
@@ -116,8 +116,7 @@ public class FeistelMainGui extends JFrame {
 		FeistelMainGui gui = new FeistelMainGui();
 	}
 
-	private static void automaticRunner(String textPath, String cipherPath, String keyPath,
-			String configPath) {
+	private static void automaticRunner(String textPath, String cipherPath, String keyPath, String configPath) {
 		Feistel.plainTextPath = textPath;
 		Feistel.cipherTextPath = cipherPath;
 		Feistel.keyPath = keyPath;
@@ -216,8 +215,7 @@ public class FeistelMainGui extends JFrame {
 
 		// Setup and center the window.
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setLocation((GuiUtils.getScreenWidth() - getWidth()) / 2,
-				(GuiUtils.getsScreenHeight() - getHeight()) / 2);
+		setLocation((GuiUtils.getScreenWidth() - getWidth()) / 2, (GuiUtils.getsScreenHeight() - getHeight()) / 2);
 
 		// Starting the window.
 		panel = new JPanel();
@@ -229,8 +227,8 @@ public class FeistelMainGui extends JFrame {
 			int AddedHeight;
 
 			public void componentResized(ComponentEvent evt) {
-				AddedWidth = getWidth() - viewBSize.x;
-				AddedHeight = getHeight() - viewBSize.y;
+				AddedWidth = getWidth() - viewBSize.width;
+				AddedHeight = getHeight() - viewBSize.height;
 				resizeViewBComponentsBy(AddedWidth, AddedHeight);
 			}
 		});
@@ -244,11 +242,12 @@ public class FeistelMainGui extends JFrame {
 		setResizable(!isViewA);
 		if (isViewA) {
 			setMinimumSize(null);
-			setSize(viewASize.x, viewASize.y);
+			setSize(viewASize.width, viewASize.height);
 		} else {
-			setMinimumSize(new Dimension(viewBSize.x, viewBSize.y));
-			setSize(viewBSize.x, viewBSize.y);
+			setMinimumSize(new Dimension(viewBSize.width, viewBSize.height));
+			setSize(viewBSize.width, viewBSize.height);
 		}
+		setLocation((GuiUtils.getScreenWidth() - getWidth()) / 2, (GuiUtils.getsScreenHeight() - getHeight()) / 2);
 
 		// Set the window title.
 		setTitle(getGuiTitle(isViewA));
@@ -317,7 +316,7 @@ public class FeistelMainGui extends JFrame {
 	}
 
 	private void setupViewA() {
-		setSize(viewASize.x, viewASize.y);
+		setSize(viewASize.width, viewASize.height);
 		setResizable(false);
 
 		// Setup original title.
@@ -372,8 +371,7 @@ public class FeistelMainGui extends JFrame {
 		encryptButton = new JButton("ENCRYPT");
 		encryptButton.setLocation(10, 130);
 		encryptButton.setSize(120, 70);
-		encryptButton.setBorder(new CompoundBorder(new LineBorder(Color.BLACK), new EmptyBorder(0,
-				0, 0, 0)));
+		encryptButton.setBorder(new CompoundBorder(new LineBorder(Color.BLACK), new EmptyBorder(0, 0, 0, 0)));
 		encryptButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
 				encrypt();
@@ -385,8 +383,7 @@ public class FeistelMainGui extends JFrame {
 		decryptButton = new JButton("DECRYPT");
 		decryptButton.setSize(120, 70);
 		decryptButton.setLocation(155, 130);
-		decryptButton.setBorder(new CompoundBorder(new LineBorder(Color.BLACK), new EmptyBorder(0,
-				0, 0, 0)));
+		decryptButton.setBorder(new CompoundBorder(new LineBorder(Color.BLACK), new EmptyBorder(0, 0, 0, 0)));
 		decryptButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
 				decrypt();
@@ -397,8 +394,7 @@ public class FeistelMainGui extends JFrame {
 		verifyButton = new JButton("VERIFY");
 		verifyButton.setLocation(300, 130);
 		verifyButton.setSize(120, 70);
-		verifyButton.setBorder(new CompoundBorder(new LineBorder(Color.BLACK), new EmptyBorder(0,
-				0, 0, 0)));
+		verifyButton.setBorder(new CompoundBorder(new LineBorder(Color.BLACK), new EmptyBorder(0, 0, 0, 0)));
 		verifyButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
 				verify();
@@ -450,7 +446,7 @@ public class FeistelMainGui extends JFrame {
 
 	private void setupViewB() {
 		setResizable(!isViewA);
-		setMinimumSize(new Dimension(viewBSize.x, viewBSize.y));
+		setMinimumSize(new Dimension(viewBSize.width, viewBSize.height));
 
 		// Setup original title.
 		setTitle(getGuiTitle(isViewA));
@@ -491,8 +487,7 @@ public class FeistelMainGui extends JFrame {
 					if (OTFPlainText.getText().isEmpty()) {
 						OTFCipherText.setText("");
 					} else {
-						String result = onTheFlyEncoding(OTFPlainText.getText(),
-								OTFKeyText.getText());
+						String result = onTheFlyEncoding(OTFPlainText.getText(), OTFKeyText.getText());
 						OTFCipherText.setText(result);
 						result = null;
 					}
@@ -531,12 +526,10 @@ public class FeistelMainGui extends JFrame {
 					// Check for right or CTRL+SHIFT combo
 					if (e.getKeyLocation() == 3) {
 						OTFPlainText.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
-						OTFPlainTextFrame
-								.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
+						OTFPlainTextFrame.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
 					} else if (e.getKeyLocation() == 2) {
 						OTFPlainText.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
-						OTFPlainTextFrame
-								.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
+						OTFPlainTextFrame.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 					}
 
 				}
@@ -596,8 +589,7 @@ public class FeistelMainGui extends JFrame {
 					if (OTFPlainText.getText().isEmpty()) {
 						OTFCipherText.setText("");
 					} else {
-						String result = onTheFlyEncoding(OTFPlainText.getText(),
-								OTFKeyText.getText());
+						String result = onTheFlyEncoding(OTFPlainText.getText(), OTFKeyText.getText());
 						OTFCipherText.setText(result);
 						result = null;
 					}
@@ -754,8 +746,7 @@ public class FeistelMainGui extends JFrame {
 		return new String(cipherTextBytes);
 	}
 
-	private static String onTheFlyDecoding(String input, String key)
-			throws IllegalArgumentException {
+	private static String onTheFlyDecoding(String input, String key) throws IllegalArgumentException {
 		byte[] cipherTextBytes = input.getBytes();
 		byte[] keyBytes = key.getBytes();
 

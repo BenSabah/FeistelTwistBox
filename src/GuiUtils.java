@@ -1,9 +1,17 @@
-import java.io.*;
-import java.awt.Toolkit;
+import java.io.File;
+import java.io.IOException;
+
 import javax.swing.UIManager;
 import javax.swing.JOptionPane;
-import java.awt.datatransfer.*;
 import javax.swing.JFileChooser;
+
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.Transferable;
+import java.awt.datatransfer.ClipboardOwner;
+import java.awt.datatransfer.StringSelection;
+import java.awt.datatransfer.UnsupportedFlavorException;
 
 /**
  * This class handles all the GUI of the program that we want to display to the
@@ -14,6 +22,13 @@ import javax.swing.JFileChooser;
  * @author Ben Sabah.
  */
 class GuiUtils {
+
+	/**
+	 * Calling this method opens the file selector window, and returns the
+	 * selected file as a File object.
+	 * 
+	 * @return The File object of the selected file.
+	 */
 	static File fileSelector() {
 		JFileChooser fc = new JFileChooser();
 		fc.showOpenDialog(null);
@@ -127,8 +142,7 @@ class GuiUtils {
 			String result = "";
 			Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
 			Transferable contents = clipboard.getContents(null);
-			boolean hasTransferableText = (contents != null)
-					&& contents.isDataFlavorSupported(DataFlavor.stringFlavor);
+			boolean hasTransferableText = (contents != null) && contents.isDataFlavorSupported(DataFlavor.stringFlavor);
 			if (hasTransferableText) {
 				try {
 					result = (String) contents.getTransferData(DataFlavor.stringFlavor);
